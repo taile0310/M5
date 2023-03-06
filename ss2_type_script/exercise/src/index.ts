@@ -22,3 +22,4 @@ for (let i = 0; i < number; i++) {
 console.log("Tổng dãy fibonacci là: " + sum);
 
 
+alert()
