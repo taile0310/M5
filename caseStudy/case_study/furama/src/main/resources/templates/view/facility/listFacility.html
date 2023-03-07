@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="/my.css">
+</head>
+<body>
+<!--    navbar-->
+<div class="row" id="bgnavbar">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a style="color: white" class="navbar-brand" href="/home">Home</a>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a style="color: white" class="nav-link active" aria-current="page" href="/facility-type">Facility
+                            Type</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style="color: white" class="nav-link active" aria-current="page" href="/rent-type">Rent
+                            Type</a>
+                    </li>
+                </ul>
+                <form th:action="@{/facility}" class="d-flex" role="search" method="get">
+                    <input type="text" name="nameSearch" th:value="${name}" placeholder="Tìm kiếm theo tên">
+                    <select name="facilityTypeSearch">
+                        <option th:each="facilityType: ${getListFacilityType}"
+                                th:text="${facilityType.getName()}"
+                                th:value="${facilityType.getId()}">
+                        </option>
+                    </select>
+                    <button class="btn btn-outline-success">Tìm kiếm</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<center><h1>DANH SÁCH CƠ SỞ HẠ TẦNG</h1></center>
+<marquee th:text="${mess}"></marquee>
+<div>
+    <div>
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <button type="submit" class="btn btn-outline-success" data-bs-toggle="modal"
+                        data-bs-target="#exampleModalAdd"
+                        data-bs-whatever="@mdo">Thêm cơ sở
+                </button>
+            </div>
+        </nav>
+    </div>
+</div>
+<table class="table table-view table-bordered">
+    <tr>
+        <th>STT</th>
+        <th>Tên</th>
+        <th>Diện tích</th>
+        <th>Giá</th>
+        <th>Người tối đa</th>
+        <th>Tiêu chuẩn phong</th>
+        <th>Mô tả</th>
+        <th>Diện tích hồ bơi</th>
+        <th>Số tầng</th>
+        <th>Dịch vụ miễn phí</th>
+        <th>Kiểu thuê</th>
+        <th>Loại cơ sở</th>
+        <th>Sửa thông tin</th>
+        <th>Xóa cơ sở</th>
+    </tr>
+    <tr th:each="facility : ${facilityPage}">
+        <td th:text="${facility.id}"></td>
+        <td th:text="${facility.name}"></td>
+        <td th:text="${facility.area}"></td>
+        <td th:text="${facility.cost}"></td>
+        <td th:text="${facility.maxPeople}"></td>
+        <td th:text="${facility.standardRoom}"></td>
+        <td th:text="${facility.descriptionOtherConvenience}"></td>
+        <td th:text="${facility.poolArea}"></td>
+        <td th:text="${facility.numberOfFloor}"></td>
+        <td th:text="${facility.facilityFree}"></td>
+        <td th:text="${facility.rentType.getName()}"></td>
+        <td th:text="${facility.facilityType.getName()}"></td>
+        <td>
+            <button type="button" class="btn btn-outline-secondary"
+                    th:attr="onclick=|idUpdate('${facility.id}','${facility.name}','${facility.area}',
+                    '${facility.maxPeople}','${facility.standardRoom}','${facility.descriptionOtherConvenience}',
+                    '${facility.poolArea}','${facility.numberOfFloor}','${facility.facilityFree}',
+                    '${facility.rentType}','${facility.facilityType}')|"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModalUpdate"
+                    data-bs-whatever="@mdo">Sửa
+            </button>
+        </td>
+        <td>
+            <button th:attr="onclick=|idDelete('${facility.id}','${facility.name}')|"
+                    type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                    data-bs-target="#exampleModalDelete"
+                    data-bs-whatever="@mdo">Xóa
+            </button>
+        </td>
+    </tr>
+</table>
+<div>
+    <a th:href="@{/facility(page=${facilityPage.number - 1}, nameSearch=${name}, facilityTypeSearch=${facilityType} ) }"
+       th:if="${facilityPage.hasPrevious()}">Trước</a>
+    <span th:text="${facilityPage.number + 1}"></span>/<span th:text="${facilityPage.totalPages}"></span>
+    <a th:href="@{/facility(page=${facilityPage.number + 1}, nameSearch=${name}, facilityTypeSearch=${facilityType} ) }"
+       th:if="${facilityPage.hasNext()}">sau</a>
+</div>
+
+<!--MODAL ADD-->
+<div th:class="${hasErr == 'true' ? 'modal fade show' : 'modal fade'}"
+     id="exampleModalAdd" tabindex="-1" aria-labelledby="exampleModalLabelAdd" aria-hidden="true"
+     th:style="${hasErr == 'true' ? 'display: block' : 'display: none'}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="justify-content-center modal-title fs-5" id="exampleModalLabelAdd"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <input hidden type="text" id="facilityTypeId">
+                    <button type="button" class="btn btn-outline-success" onclick="addVilla()">Villa</button>
+                    <button type="button" class="btn btn-outline-success" onclick="addHouse()">House</button>
+                    <button type="button" class="btn btn-outline-success" onclick="addRoom()">Room</button>
+                </div>
+                <form th:action="@{/facility/save}" method="post" th:object="${facilityDto}">
+                    <table>
+                        <legend>Thêm Cơ Sở</legend>
+                        <tr>
+                            <td>Tên cơ sở</td>
+                            <td>
+                                <input type="text" th:field="*{name}"/>
+                                <span style="color: red" th:if="${#fields.hasErrors('name')}"
+                                      th:errors="*{name}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Diện tích</td>
+                            <td>
+                                <input type="number" th:field="*{area}"/>
+                                <span style="color: red"
+                                      th:if="${#fields.hasErrors('area')}"
+                                      th:errors="*{area}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Giá thuê</td>
+                            <td>
+                                <input type="number" th:field="*{cost}"/>
+                                <span style="color: red"
+                                      th:if="${#fields.hasErrors('cost')}"
+                                      th:errors="*{cost}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Số người tối đa</td>
+                            <td>
+                                <input type="number" th:field="*{maxPeople}"/>
+                                <span style="color: red" th:if="${#fields.hasErrors('maxPeople')}"
+                                      th:errors="*{maxPeople}"></span>
+                            </td>
+                        </tr>
+
+                        <tr id="standardRoom">
+                            <td>Tiêu chuẩn phòng</td>
+                            <td>
+                                <input type="text" th:field="*{standardRoom}"/>
+                            </td>
+                        </tr>
+
+                        <tr id="description">
+                            <td>Mô tả</td>
+                            <td>
+                                <input type="text" th:field="*{descriptionOtherConvenience}"/>
+                            </td>
+                        </tr>
+
+                        <tr id="poolArea">
+                            <td>Diện tích hồ bơi</td>
+                            <td>
+                                <input type="text" th:field="*{poolArea}"/>
+                                <span style="color: red" th:if="${#fields.hasErrors('poolArea')}"
+                                      th:errors="*{poolArea}"></span>
+                            </td>
+                        </tr>
+
+                        <tr id="numberOfFloors">
+                            <td>Số tầng</td>
+                            <td>
+                                <input th:field="*{numberOfFloor}"/>
+                                <span style="color: red" th:if="${#fields.hasErrors('numberOfFloor')}"
+                                      th:errors="*{numberOfFloor}"></span>
+                            </td>
+                        </tr>
+                        <tr id="facilityFree">
+                            <td>Dịch vụ miễn phí</td>
+                            <td>
+                                <input th:field="*{facilityFree}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Kiểu thuê</td>
+                            <td>
+                                <select th:field="*{rentType}">
+                                    <option th:each="rentType: ${rentTypeService}"
+                                            th:text="${rentType.getName()}"
+                                            th:value="${rentType.getId()}">
+                                    </option>
+                                    <span style="color: red" th:if="${#fields.hasErrors('rentType')}"></span>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Loại cơ sở</td>
+                            <td>
+                                <select th:field="*{facilityType}">
+                                    <option th:each="facilityType: ${getListFacilityType}"
+                                            th:text="${facilityType.getName()}"
+                                            th:value="${facilityType.getId()}">
+                                    </option>
+                                    <span style="color: red" th:if="${#fields.hasErrors('facilityType')}"></span>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                th:attr="onclick=|onCloseModal()|">Đóng
+                        </button>
+                        <button type="submit" class="btn btn-primary">Thêm cơ sở</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--MODAL UPDATE-->
+<div th:class="${hasError == 'true' ? 'modal fade show' : 'modal fade'}"
+     id="exampleModalUpdate" tabindex="-1" aria-labelledby="exampleModalLabelUpdate"
+     th:style="${hasError == 'true' ? 'display: block' : 'display: none'}"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="justify-content-center modal-title fs-5" id="exampleModalLabelUpdate"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/facility/update}" method="post" th:object="${facilityDto}">
+                    <table>
+                        <center><h5>Sửa Thông Tin Cơ Sở</h5></center>
+                        <input th:field="*{id}" hidden id="updateId" name="id">
+                        <tr>
+                            <td>Tên cơ sở:</td>
+                            <td>
+                                <input type="text" th:field="*{name}" th:id="updateName"/>
+                                <span style="color: red" th:if="${#fields.hasErrors('name')}"
+                                      th:errors="*{name}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Diện tích:</td>
+                            <td>
+                                <input type="number" th:field="*{area}" id="updateArea"/>
+                                <span style="color: red" th:if="${#fields.hasErrors('area')}"
+                                      th:errors="*{area}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Giá thuê:</td>
+                            <td>
+                                <input th:field="*{cost}" id="updateCost"/>
+                                <span style="color: red" th:if="${#fields.hasErrors('cost')}"
+                                      th:errors="*{cost}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Số người:</td>
+                            <td>
+                                <input type="number" th:field="*{maxPeople}" id="updateMaxPeople"/>
+                                <span style="color: red" th:if="${#fields.hasErrors('maxPeople')}"
+                                      th:errors="*{maxPeople}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tiêu chuẩn phòng:</td>
+                            <td>
+                                <input type="text" th:field="*{standardRoom}" id="updateStandardRoom"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mô tả:</td>
+                            <td>
+                                <input type="text" th:field="*{descriptionOtherConvenience}"
+                                       id="updateDescriptionOtherConvenience"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Diện tích hồ bơi:</td>
+                            <td>
+                                <input type="number" th:field="*{poolArea}" id="updatePoolArea"/>
+                                <span style="color: red" th:if="${#fields.hasErrors('poolArea')}"
+                                      th:errors="*{poolArea}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Số tầng:</td>
+                            <td>
+                                <input th:field="*{numberOfFloor}" id="updateNumberOfFloor"/>
+                                <span style="color: red" th:if="${#fields.hasErrors('numberOfFloor')}"
+                                      th:errors="*{numberOfFloor}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Dịch vụ miễn phí:</td>
+                            <td>
+                                <input th:field="*{facilityFree}" id="updateFacilityFree"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Kiểu thuê:</td>
+                            <td>
+                                <select th:field="*{rentType}" id="updateRentType">
+                                    <option th:each="rentType: ${rentTypeService}"
+                                            th:text="${rentType.getName()}"
+                                            th:value="${rentType.getId()}">
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Loại cơ sở:</td>
+                            <td>
+                                <input th:field="${facilityType}" id="updateFacilityType" readonly>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                th:attr="onclick=|onCloseModal()|">Đóng
+                        </button>
+                        <button type="submit" class="btn btn-primary">Sửa thông tin khách hàng</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--MODAL DELETE-->
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabelDelete"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabelDelete">Xóa sản phẩm</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{/facility/delete}" method="post">
+                <div class="modal-body">
+                    <input hidden type="text" id="deleteId" name="id">
+                    <span>Bạn có muốn xóa khách hàng</span>
+                    <span style="color:red;" id="deleteName"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Xóa khách hàng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+<div th:replace="~{furama :: footer}"></div>
+<script>
+    // ĐÓNG MODAL
+    function onCloseModal() {
+        document.getElementById('exampleModalAdd').style.display = 'none';
+        document.getElementById('exampleModalUpdate').style.display = 'none';
+        window.location.href = "/facility";
+    }
+
+    // DELETE
+    function idDelete(id, name) {
+        document.getElementById("deleteId").value = id;
+        document.getElementById("deleteName").innerText = name;
+    }
+
+    // UPDATE
+    function idUpdate(id, name, area, cost, maxPeople, standardRoom, descriptionOtherConvenience, poolArea, numberOfFloor,
+                      facilityFree, rentType, facilityType) {
+        document.getElementById("updateId").value = id;
+        document.getElementById("updateName").value = name;
+        document.getElementById("updateArea").value = area;
+        document.getElementById("updateCost").value = cost;
+        document.getElementById("updateMaxPeople").value = maxPeople;
+        document.getElementById("updateStandardRoom").value = standardRoom;
+        document.getElementById("updateDescriptionOtherConvenience").value = descriptionOtherConvenience;
+        document.getElementById("updatePoolArea").value = poolArea;
+        document.getElementById("updateNumberOfFloor").value = numberOfFloor;
+        document.getElementById("updateFacilityFree").value = facilityFree;
+        document.getElementById("updateRentType").value = rentType;
+        document.getElementById("updateFacilityType").value = facilityType;
+    }
+
+    // BUTTON ADD
+    function addVilla() {
+        document.getElementById("facilityTypeId").value = 1;
+        document.getElementById("standardRoom").style.display = 'table-row';
+        document.getElementById("description").style.display = 'table-row';
+        document.getElementById("poolArea").style.display = 'table-row';
+        document.getElementById("numberOfFloors").style.display = 'table-row';
+        document.getElementById("facilityFree").style.display = 'none';
+    }
+
+    function addHouse() {
+        document.getElementById("facilityTypeId").value = 2;
+        document.getElementById("standardRoom").style.display = 'table-row';
+        document.getElementById("description").style.display = 'table-row';
+        document.getElementById("poolArea").style.display = 'none';
+        document.getElementById("numberOfFloors").style.display = 'table-row';
+        document.getElementById("facilityFree").style.display = 'none';
+    }
+
+    function addRoom() {
+        document.getElementById("facilityTypeId").value = 3;
+        document.getElementById("standardRoom").style.display = 'none';
+        document.getElementById("description").style.display = 'none';
+        document.getElementById("poolArea").style.display = 'none';
+        document.getElementById("numberOfFloors").style.display = 'none';
+        document.getElementById("facilityFree").style.display = 'table-row';
+    }
+</script>
+</html>

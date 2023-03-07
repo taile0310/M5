@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+<!--    ajax-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<!--    css-->
+    <link rel="stylesheet" href="/my.css">
+</head>
+<body>
+<!--    navbar-->
+<div class="row" id="bgnavbar">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a style="color: white" class="navbar-brand" href="/home">Home</a>
+        </div>
+    </nav>
+</div>
+<center><h1>DANH SÁCH HỢP ĐỒNG</h1></center>
+<div>
+    <div>
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <button type="submit" class="btn btn-outline-success" data-bs-toggle="modal"
+                        data-bs-target="#exampleModalAdd"
+                        data-bs-whatever="@mdo">Thêm hơp đồng
+                </button>
+            </div>
+        </nav>
+    </div>
+</div>
+<marquee th:text="${mess}"></marquee>
+<table class="table table-view table-bordered">
+    <tr>
+        <th>STT</th>
+        <th>Ngày bắt đầu</th>
+        <th>Ngày kết thức</th>
+        <th>Tiền cọc</th>
+        <th>Nhân viên</th>
+        <th>Khách hàng</th>
+        <th>Cơ sở</th>
+        <th>Tổng tiền</th>
+        <th>Các dịch vụ đi kèm</th>
+        <th>Sửa thông tin</th>
+        <th>Xóa cơ sở</th>
+    </tr>
+    <tr th:each="contract : ${contractPage}">
+        <td th:text="${contract.id}"></td>
+        <td th:text="${contract.startDay}"></td>
+        <td th:text="${contract.endDay}"></td>
+        <td th:text="${contract.deposit}"></td>
+        <td th:text="${contract.employee.getName()}"></td>
+        <td th:text="${contract.customer.getName()}"></td>
+        <td th:text="${contract.facility.getName()}"></td>
+        <td th:text="${contract.total}"></td>
+        <td>
+            <button th:attr="onclick=|viewAttachFacility('${contract.id}')|"
+                    type="button" class="btn btn-outline-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModalView"
+                    data-bs-whatever="@mdo">Danh sách các dịch vụ đi kèm
+            </button>
+            <button th:attr="onclick=|getFacilityList('${contract.id}')|"
+                    type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                    data-bs-target="#exampleModalAdd1"
+                    data-bs-whatever="@mdo">+
+            </button>
+        </td>
+        <td>
+            <button type="button" class="btn btn-outline-secondary"
+                    th:attr="onclick=|idUpdate('${contract.id}','${contract.startDay}','${contract.endDay}',
+                    '${contract.deposit}','${contract.employee}','${contract.customer}',
+                    '${contract.facility}')|"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModalUpdate"
+                    data-bs-whatever="@mdo">Sửa
+            </button>
+        </td>
+        <td>
+            <button th:attr="onclick=|idDelete('${contract.id}','${contract.employee.getName()}')|"
+                    type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                    data-bs-target="#exampleModalDelete"
+                    data-bs-whatever="@mdo">Xóa
+            </button>
+        </td>
+    </tr>
+</table>
+<div>
+    <a th:href="@{/contract(page=${contractPage.number - 1}) }"
+       th:if="${contractPage.hasPrevious()}">Trước</a>
+    <span th:text="${contractPage.number + 1}"></span>/<span th:text="${contractPage.totalPages}"></span>
+    <a th:href="@{/contract(page=${contractPage.number + 1} ) }"
+       th:if="${contractPage.hasNext()}">sau</a>
+</div>
+
+<!--MODAL DELETE-->
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabelDelete"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabelDelete">Xóa sản phẩm</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{/contract/delete}" method="post">
+                <div class="modal-body">
+                    <input hidden type="text" id="deleteId" name="id">
+                    <span>Bạn có muốn xóa hợp đồng được tạo bới nhân viên</span>
+                    <span style="color:red" id="deleteNameEmployee"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Xóa hợp đồng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--MODAL ADD DỊCH VỤ ĐI KÈM-->
+<div th:class="${hasErr == 'true' ? 'modal fade show' : 'modal fade'}"
+     id="exampleModalAdd1" tabindex="-1" aria-labelledby="exampleModalLabelAdd1" aria-hidden="true"
+     th:style="${hasErr == 'true' ? 'display: block' : 'display: none'}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="justify-content-center modal-title fs-5" id="exampleModalLabelAdd1"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <h4>Thêm hợp đồng chi tiết</h4>
+                    <tr>
+                        <td>
+                            <select id="attachFacility"></select>
+                        </td>
+                        <td><input type="number" id="idContract" hidden></td>
+                        <td><input type="number" placeholder="Nhập số lượng" id="quantity"></td>
+                    </tr>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                            onclick="addContractDetail()">Thêm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL ADD-->
+<div th:class="${hasErr == 'true' ? 'modal fade show' : 'modal fade'}"
+     id="exampleModalAdd" tabindex="-1" aria-labelledby="exampleModalLabelAdd" aria-hidden="true"
+     th:style="${hasErr == 'true' ? 'display: block' : 'display: none'}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="justify-content-center modal-title fs-5" id="exampleModalLabelAdd"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/contract/save" method="post" th:object="${contractDto}">
+                    <table>
+                        <legend>Thêm Hợp Đồng</legend>
+                        <tr>
+                            <td>Ngày bắt đầu</td>
+                            <td>
+                                <input type="date" th:field="*{startDay}"/>
+                                <span style="color: red" th:if="${#fields.hasErrors('startDay')}"
+                                      th:errors="*{startDay}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Ngày kết thúc</td>
+                            <td>
+                                <input type="date" th:field="*{endDay}"/>
+                                <span style="color: red" th:if="${#fields.hasErrors('endDay')}"
+                                      th:errors="*{endDay}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tiền đặt cọc</td>
+                            <td>
+                                <input type="number" th:field="*{deposit}"/>
+                                <span style="color: red" th:if="${#fields.hasErrors('deposit')}"
+                                      th:errors="*{deposit}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nhân viên tạo hợp đồng</td>
+                            <td>
+                                <select th:field="*{employee}">
+                                    <option th:each="employee: ${listEmployee}"
+                                            th:text="${employee.getName()}"
+                                            th:value="${employee.getId()}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Khách hàng</td>
+                            <td>
+                                <select th:field="*{customer}">
+                                    <option th:each="customer: ${listCustomer}"
+                                            th:text="${customer.getName()}"
+                                            th:value="${customer.getId()}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Cơ sở</td>
+                            <td>
+                                <select th:field="*{facility}" id="facility" onchange="toTal()">
+                                    <option th:each="facility: ${listFacility}"
+                                            th:text="${facility.getName()}"
+                                            th:value="${facility.getId()}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tổng tiền</td>
+                            <td><input type="number" th:field="*{total}" id="total" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Dịch vụ di kèm</td>
+                            <td>
+                                <button th:attr="onclick=|attachFacilityOnAddNewContract()|"
+                                        type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModalAdd2"
+                                        data-bs-whatever="@mdo">+
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="listAttachFacility" name="listAttachFacility">
+                            </td>
+                            <td>
+                                <input id="listQuantity" name="listQuantity">
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Thêm hợp đồng</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL ADD DỊCH VỤ ĐI KÈM TRONG THÊM MỚI HỢP ĐỒNG-->
+<div class="modal fade" id="exampleModalAdd2" tabindex="-1"
+     aria-labelledby="exampleModalLabelAdd2" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="justify-content-center modal-title fs-5" id="exampleModalLabelAdd2"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <h5>Chọn dịch vụ đi kèm</h5>
+                    <tr>
+                        <td>
+                            <select id="attachFacilityNew" onchange="toTal()"></select>
+                        </td>
+                        <td><input type="number" placeholder="Nhập số lượng" id="quantityNew"></td>
+                    </tr>
+                </table>
+                <div class="modal-footer">
+                    <button onclick="getDataAttachFacilityOnModal()" type="button"
+                            class="btn btn-primary" data-bs-target="#exampleModalAdd" data-bs-toggle="modal" >Chọn</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL VIEW DỊCH VỤ ĐI KÈM-->
+<div class="modal fade" id="exampleModalView" tabindex="-1" aria-labelledby="exampleModalLabelView"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="justify-content-center modal-title fs-5" id="exampleModalLabelView"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <center><h3>Danh sách dịch vụ đi kèm</h3></center>
+                <table class="table table-view table-bordered">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên dịch vụ đi kèm</th>
+                        <th>Giá</th>
+                        <th>Đơn vị</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<div th:replace="~{furama :: footer}"></div>
+</html>
+
+<script>
+    // ĐÓNG MODAL
+    function onCloseModal() {
+        document.getElementById('exampleModalAdd').style.display = 'none';
+        document.getElementById('exampleModalUpdate').style.display = 'none';
+        window.location.href = "/contract";
+    }
+</script>
+
+<script>
+    // DELETE
+    function idDelete(id, employee) {
+        document.getElementById("deleteId").value = id;
+        console.log(employee.id)
+        console.log(employee.name)
+        document.getElementById("deleteNameEmployee").innerText = employee;
+    }
+</script>
+
+<script>
+    // SHOW RA LIST DỊCH VỤ ĐI KÈM
+    function viewAttachFacility(idContract) {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "http://localhost:8080/api/attach-facility?idContract=" + idContract,
+
+            success: function (data) {
+                console.log(data);
+                let content = '';
+                for (let i = 0; i < data.length; i++) {
+                    content += `<tr>`
+                    content += `<td>${data[i].id}</td>`
+                    content += `<td>${data[i].name}</td>`
+                    content += `<td>${data[i].cost}</td>`
+                    content += `<td>${data[i].unit}</td>`
+                    content += `<td>${data[i].status}</td>`
+                    content += `</tr>`
+                }
+                $('#tbody').html(content);
+            }
+
+        })
+    }
+</script>
+
+<script>
+    // LẤY ĐUỢC LIST DỊCH VỤ ĐI KÈM VÀ CONTRACT ID VÀ MỞ ĐƯỢC MODAL NGAY CHỖ LIST
+    function getFacilityList(idContract) {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "http://localhost:8080/api",
+            success: function (data) {
+                console.log(data);
+                let content = '';
+                for (let i = 0; i < data.length; i++) {
+
+                    content += ` <option value='${data[i].id}' >${data[i].name}</option>`
+
+                }
+                document.getElementById('idContract').value = idContract;
+                $('#attachFacility').html(content);
+            }
+        })
+    }
+</script>
+
+<script>
+    // THÊM HỢP ĐỒNG CHI TIẾT
+    function addContractDetail() {
+        let quantity = parseInt(document.getElementById('quantity').value)
+        let attachFacility = parseInt(document.getElementById('attachFacility').value)
+        let contract = parseInt(document.getElementById('idContract').value)
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "http://localhost:8080/api/addContractDetail?quantity=" + quantity + "&&attachFacilityId=" + attachFacility + "&&contractId=" + contract
+
+        })
+    }
+</script>
+
+<script>
+    // THÊM MỚI DỊCH VỤ ĐI KÈM TRONG THÊM MỚI HỢP ĐỒNG
+    function attachFacilityOnAddNewContract() {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "http://localhost:8080/api",
+            success: function (data) {
+                console.log(data);
+
+                let content = '';
+                for (let i = 0; i < data.length; i++) {
+
+                    content += ` <option value='${data[i].id}' >${data[i].name}</option>`
+
+                }
+                $('#attachFacilityNew').html(content);
+
+            }
+
+        })
+    }
+</script>
+
+<script>
+    // lẤY THÔNG TIN DỊCH VỤ ĐI KÈM GẮN LÊN MODAL ADD
+    let listId = [];
+    let listQuantity = [];
+
+    function getDataAttachFacilityOnModal() {
+        let idAttachFacility = document.getElementById('attachFacilityNew').value;
+        let quantityAttachFacility = document.getElementById('quantityNew').value;
+        listId.push(idAttachFacility);
+        listQuantity.push(quantityAttachFacility);
+        console.log(listId.toString())
+        document.getElementById('listAttachFacility').value = listId.toString();
+        document.getElementById('listQuantity').value = listQuantity.toString();
+        toTal()
+    }
+</script>
+
+<script>
+// TÍNH TỔNG TIỀN
+    let total = 0;
+    let dangchọndichvu = true;
+    let giadichvu = 0;
+    function toTal() {
+        let quantity = document.getElementById('quantityNew').value;
+        let idAttach = document.getElementById('attachFacilityNew').value;
+        // luôn luôn lúc nào cũng có cost
+        let facilityId = parseInt(document.getElementById('facility').value);
+        if (!isNaN(parseInt(document.getElementById('attachFacilityNew').value))){
+            // vì có id của dich vụ đi kèm nên chạy đc vào đây
+            dangchọndichvu = false;
+            quantity = parseInt(document.getElementById('quantityNew').value);
+            idAttach = parseInt(document.getElementById('attachFacilityNew').value);
+        }
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "http://localhost:8080/api/total?quantity=" + quantity + "&&attachFacilityId=" + idAttach + "&&facilityId=" + facilityId,
+            success: function (data) {
+                if (dangchọndichvu) {
+                    // trừ giá dịch vụ thêm lúc trc
+                    total -= giadichvu
+                    giadichvu = data;
+                    total += giadichvu
+                } else {
+                     // vì phương thức này nó tính tổng cả dịch vụ nữa nên mỗi lần ấn nó tính tổng hết cộng với cái cũ
+                     total -= giadichvu
+                    total += data
+                }
+                // không gắn bằng null nó vẫn giữ giá trị ( id của dich vụ đi kèm , quantity)
+                document.getElementById('attachFacilityNew').value = null;
+                document.getElementById('quantityNew').value = null;
+                document.getElementById('total').value = total;
+            }
+        })
+    }
+</script>
