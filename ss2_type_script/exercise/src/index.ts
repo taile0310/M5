@@ -8,13 +8,13 @@ let fibonacci = (num: number): number => {
 
 // triển khai dãy fibonacci và tính tổng
 
-let number: number = 10;
+let num: number = 10;
 
 let sum: number = 0;
 
 console.log("Dãy số fibonacci là : ")
 
-for (let i = 0; i < number; i++) {
+for (let i = 0; i < num; i++) {
     console.log(fibonacci(i));
     sum += fibonacci(i);
 }
