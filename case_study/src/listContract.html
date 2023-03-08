@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/bootstrap-5.1.3/css/bootstrap.css">
+    <script src="../static/bootstrap-5.1.3/js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="../static/my.css">
+</head>
+<body>
+<!--    header-->
+<div class=" d-flex justify-content-between">
+    <div class=" col-lg-1 left" style="width: 5%">
+        <img class="img-fluid"
+             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7sJWTStWXJUitRRMbzAqI6WqzMazb4vyuHtwdO5Kk&s"
+             alt="logo">
+    </div>
+    <div class="row col-lg-2 m-md-8 d-flex justify-content-center align-items-md-center ">
+        Lê Hữu Tài
+        <img src="https://png.pngtree.com/png-vector/20190223/ourmid/pngtree-admin-rolls-glyph-black-icon-png-image_691507.jpg"
+             style="width: 25%;height: 35%" alt="">
+    </div>
+</div>
+<!--    navbar-->
+<div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" id="bgnavbar">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a style="color:  white" class="navbar-brand" href="/home">Home</a>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a style="color:  white" class="nav-link active" aria-current="page"
+                           href="/employee">Employee</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style="color:  white" class="nav-link active" aria-current="page"
+                           href="/customer">Customer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style="color:  white" class="nav-link active" aria-current="page"
+                           href="../src/add.html">Facility</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<center><h1>DANH SÁCH HỢP DỒNG</h1></center>
+<div>
+    <div>
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <button type="submit" class="btn btn-outline-success" data-bs-toggle="modal"
+                        data-bs-target="#exampleModalAdd"
+                        data-bs-whatever="@mdo">Thêm hơp đồng
+                </button>
+            </div>
+        </nav>
+    </div>
+</div>
+<table class="table table-view table-bordered">
+    <tr>
+        <th>STT</th>
+        <th>Ngày bắt đầu</th>
+        <th>Ngày kết thức</th>
+        <th>Tiền cọc</th>
+        <th>Nhân viên</th>
+        <th>Khách hàng</th>
+        <th>Cơ sở</th>
+        <th>Tổng tiền</th>
+        <th>Các dịch vụ đi kèm</th>
+        <th>Sửa thông tin</th>
+        <th>Xóa cơ sở</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>01-02-2023</td>
+        <td>02-02-2023</td>
+        <td>500000</td>
+        <td>Linh</td>
+        <td>Tai</td>
+        <td>Villa</td>
+        <td>500000</td>
+        <td>
+            <button
+                    type="button" class="btn btn-outline-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModalView"
+                    data-bs-whatever="@mdo">Danh sách các dịch vụ đi kèm
+            </button>
+            <button
+                    type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                    data-bs-target="#exampleModalAdd1"
+                    data-bs-whatever="@mdo">+
+            </button>
+        </td>
+        <td>
+            <button type="button" class="btn btn-outline-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModalUpdate"
+                    data-bs-whatever="@mdo">Sửa
+            </button>
+        </td>
+        <td>
+            <button
+                    type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                    data-bs-target="#exampleModalDelete"
+                    data-bs-whatever="@mdo">Xóa
+            </button>
+        </td>
+    </tr>
+</table>
+<div>
+    <a class="btn btn-outline-info">Trước</a>
+    <span> 1/5</span>
+    <a class="btn btn-outline-info">Sau</a>
+
+</div>
+<!--    footer-->
+<div>
+    <footer class="mainfooter" role="contentinfo">
+        <div class="footer-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <!--Column1-->
+                        <div class="footer-pad">
+                            <h4>Moving Guide</h4>
+                            <p>Furama Resort is the premier base from which to explore one of Asia's most exciting
+                                destinations.
+                                Just a short drive from Da Nang are four UNESCO World Heritage Sites:</p>
+                            <a class="btn btn-outline-info" href="https://www.google.com/maps/dir//
+                                %C4%91%E1%BB%8Ba+ch%E1%BB%89+furama+resort+%C4%91%C3%A0+n%E1%BA%B5ng/data=
+                                !4m6!4m5!1m1!4e2!1m2!1m1!1s0x31420fdbc8cc38ef:
+                                0x9a6a3e31121225d2?sa=X&ved=2ahUKEwjYyKyyzqP8AhUNt1YBHYGWBM4Q9Rd6BAhgEAQ"
+                               target="_blank">See On Map</a>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <h3>Place</h3>
+                                </li>
+                                <li>
+                                    <a
+                                            href="https://thuathienhue.gov.vn/vi-vn/Ten-duong-tinh-thua-thien-hue/cid/A064E1C0-0A55-462F-A303-988E0859B383"
+                                            target="_blank">The ancient capital of Hue</a></li>
+                                <li><a
+                                        href="https://hoian.quangnam.gov.vn/webcenter/portal/hoian" target="_blank">Hoi
+                                    An</a></li>
+                                <li><a
+                                        href="https://disanvanhoamyson.vn/" target="_blank">My Son Sanctuary</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!--Column2-->
+                        <div class="footer-pad">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Rack rate</a></li>
+                                <li><a href="#">Lifestyle blog</a></li>
+                                <li><a href="#">Recruitment</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!--Column3-->
+                        <div class="footer-pad">
+                            <h4>Contact</h4>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <img src="https://w1.pngwing.com/pngs/107/636/png-transparent-facebook-social-icons-checkin-like-button-social-networking-service-line-logo-angle-symbol-thumbnail.png"
+                                         style="width: 5%" alt="">
+                                    <a href="https://www.google.com/maps/dir//%C4%91%E1%BB%8Ba+ch%E1%BB%89+furama+resort
+                                        +%C4%91%C3%A0+n%E1%BA%B5ng/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x31420fdbc8cc38ef:0x9a6a3e31
+                                        121225d2?sa=X&ved=2ahUKEwjYyKyyzqP8AhUNt1YBHYGWBM4Q9Rd6BAhgEAQ">103 - 105 Vo
+                                        Nguyen Giap Street, Khue My Ward,
+                                        Ngu Hanh Son District, Danang City, Vietnam</a>
+                                </li>
+                                <li>
+                                    <img src="https://e7.pngegg.com/pngimages/832/412/png-clipart-telephone-call-mobile-phones-computer-icons-symbol-telephone-miscellaneous-text-thumbnail.png"
+                                         style="width: 5%" alt="">
+                                    <a href="#">Tel.: 84-236-3847
+                                        333/888 * Fax: 84-236-3847 666</a></li>
+                                <li>
+                                    <img src="https://i.pinimg.com/564x/4d/a2/81/4da2810b42ea6e528cd515695ea198a8.jpg"
+                                         style="width: 5%" alt="">
+                                    <a href="#">Email:
+                                        reservation@furamavietnam.com * www.furamavietnam.com</a>
+                                </li>
+                                <ul class="social-network social-circle">
+                                    <li><img
+                                            src="https://e7.pngegg.com/pngimages/20/224/png-clipart-facebook-computer-icons-logo-facebook-blue-cdr.png"
+                                            style="width: 7%"><i class="fa fa-linkedin"></i></img></li>
+                                    <li><img
+                                            src="https://genk.mediacdn.vn/thumb_w/640/2017/tai-xuong-1504063357781-crop1504064201548p.jpg"
+                                            style="width: 7%"><i class="fa fa-linkedin"></i></img></li>
+                                    <li><img
+                                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png"
+                                            style="width: 7%"><i
+                                            class="fa fa-linkedin"></i></img></li>
+                                </ul>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 copy">
+                        <p class="text-center">&copy; 2018 Furama Resort Danang.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
+</body>
+<!--MODAL ADD-->
+<div class="modal fade"
+     id="exampleModalAdd" tabindex="-1" aria-labelledby="exampleModalLabelAdd" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="justify-content-center modal-title fs-5" id="exampleModalLabelAdd"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                    <table>
+                        <legend>Thêm Hợp Đồng</legend>
+                        <tr>
+                            <td>Ngày bắt đầu</td>
+                            <td>
+                                <input type="date" />
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Ngày kết thúc</td>
+                            <td>
+                                <input type="date" />
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tiền đặt cọc</td>
+                            <td>
+                                <input type="number" />
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nhân viên tạo hợp đồng</td>
+                            <td>
+                                <input type="">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Khách hàng</td>
+                            <td>
+                                <input type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Cơ sở</td>
+                            <td>
+                                <input type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tổng tiền</td>
+                            <td><input type="number" id="total" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Dịch vụ di kèm</td>
+                            <td>
+                                <button
+                                        type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModalAdd2"
+                                        data-bs-whatever="@mdo">+
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="listAttachFacility" name="listAttachFacility">
+                            </td>
+                            <td>
+                                <input id="listQuantity" name="listQuantity">
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Thêm hợp đồng</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL ADD DỊCH VỤ ĐI KÈM TRONG THÊM MỚI HỢP ĐỒNG-->
+<div class="modal fade" id="exampleModalAdd2" tabindex="-1"
+     aria-labelledby="exampleModalLabelAdd2" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="justify-content-center modal-title fs-5" id="exampleModalLabelAdd2"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <h5>Chọn dịch vụ đi kèm</h5>
+                    <tr>
+                        <td>
+                            <select id="attachFacilityNew" onchange="toTal()"></select>
+                        </td>
+                        <td><input type="number" placeholder="Nhập số lượng" id="quantityNew"></td>
+                    </tr>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-target="#exampleModalAdd" data-bs-toggle="modal" >Chọn</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL DELETE-->
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabelDelete"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabelDelete">Xóa sản phẩm</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+                <div class="modal-body">
+                    <input hidden type="text" id="deleteId" name="id">
+                    <span>Bạn có muốn xóa hợp đồng được tạo bới nhân viên</span>
+                    <span style="color:red" id="deleteNameEmployee"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Xóa hợp đồng</button>
+                </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL ADD DỊCH VỤ ĐI KÈM-->
+<div class="modal fade"
+     id="exampleModalAdd1" tabindex="-1" aria-labelledby="exampleModalLabelAdd1" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="justify-content-center modal-title fs-5" id="exampleModalLabelAdd1"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <h4>Thêm hợp đồng chi tiết</h4>
+                    <tr>
+                        <td>
+                            <select id="attachFacility"></select>
+                        </td>
+                        <td><input type="number" id="idContract" hidden></td>
+                        <td><input type="number" placeholder="Nhập số lượng" id="quantity"></td>
+                    </tr>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                            onclick="addContractDetail()">Thêm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
