@@ -1,0 +1,62 @@
+<h4  class="d-flex justify-content-center">Thêm Hợp Đồng</h4>
+<div  class="d-flex justify-content-center">
+  <table>
+    <tr>
+      <td>Ngày bắt đầu</td>
+      <td>
+        <input type="date" />
+
+      </td>
+    </tr>
+    <tr>
+      <td> Ngày kết thúc</td>
+      <td>
+        <input type="date" />
+
+      </td>
+    </tr>
+    <tr>
+      <td>Tiền đặt cọc</td>
+      <td>
+        <input type="text" />
+
+      </td>
+    </tr>
+    <tr>
+      <td>Nhân viên tạo hợp đồng</td>
+      <td>
+        <input type="">
+      </td>
+    </tr>
+    <tr>
+      <td>Khách hàng</td>
+      <td>
+        <input type="text">
+      </td>
+    </tr>
+    <tr>
+      <td>Cơ sở</td>
+      <td>
+        <input type="text">
+      </td>
+    </tr>
+    <tr>
+      <td>Tổng tiền</td>
+      <td><input type="number" id="total" readonly></td>
+    </tr>
+    <tr>
+      <td>Dịch vụ di kèm</td>
+      <td>
+        <button
+          type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+          data-bs-target="#exampleModalAdd2"
+          data-bs-whatever="@mdo">+
+        </button>
+      </td>
+    </tr>
+  </table>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+    <button type="submit" class="btn btn-outline-info" data-bs-dismiss="modal">Thêm hợp đồng</button>
+  </div>

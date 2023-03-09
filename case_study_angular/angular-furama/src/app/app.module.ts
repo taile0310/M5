@@ -10,6 +10,9 @@ import { AddNewFacilityComponent } from './add-new-facility/add-new-facility.com
 import { UpdateFacilityComponent } from './update-facility/update-facility.component';
 import { ListCustomerComponent } from './list-customer/list-customer.component';
 import { AddNewCustomerComponent } from './add-new-customer/add-new-customer.component';
+import { UpdateCustomerComponent } from './update-customer/update-customer.component';
+import { ListContractComponent } from './list-contract/list-contract.component';
+import { AddNewContractComponent } from './add-new-contract/add-new-contract.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { AddNewCustomerComponent } from './add-new-customer/add-new-customer.com
     AddNewFacilityComponent,
     UpdateFacilityComponent,
     ListCustomerComponent,
-    AddNewCustomerComponent
+    AddNewCustomerComponent,
+    UpdateCustomerComponent,
+    ListContractComponent,
+    AddNewContractComponent
   ],
   imports: [
     BrowserModule
