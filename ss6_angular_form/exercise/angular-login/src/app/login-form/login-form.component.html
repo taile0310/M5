@@ -1,0 +1,35 @@
+<h3>Đăng Nhập Email</h3>
+<form [formGroup]="rfLoginForm" (ngSubmit)="add()">
+  <table>
+    <tr>
+      <td>
+        <label for="email">Email</label>
+      </td>
+      <td>
+        <input type="text" id="email" class="form-control" formControlName="email">
+        <p *ngIf="rfLoginForm.controls.email.touched &&
+     rfLoginForm.controls.email?.errors?.required"
+           class="text-danger">Không được để trống</p>
+        <p *ngIf="rfLoginForm.controls.email.touched &&
+     rfLoginForm.controls.email?.errors?.email"
+           class="text-danger">Email phăỉ đúng định dạng</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label for="password">Password</label>
+      </td>
+      <td>
+        <input type="text" id="password" name="password" class="form-control" formControlName="password">
+        <p *ngIf="rfLoginForm.controls.password.touched &&
+     rfLoginForm.controls.password?.errors?.required"
+           class="text-danger">Không được để trống</p>
+        <p *ngIf="rfLoginForm.controls.password.touched &&
+     rfLoginForm.controls.password.errors?.minlength"
+           class="text-danger">Mật khẩu phải đủ 6 kí tự</p>
+      </td>
+    </tr>
+  </table>
+  <button class="btn btn-outline-info" type="submit" [disabled]="rfLoginForm.invalid">Đăng nhập</button>
+</form>

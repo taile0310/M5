@@ -1,0 +1,104 @@
+<h3>Đăng Kí Tài Khoản Email</h3>
+<form [formGroup]="rfRegistrationsForm" (ngSubmit)="add()">
+  <table>
+    <tr>
+      <td>
+        <label for="email">Email</label>
+      </td>
+      <td>
+        <input type="text" id="email" class="form-control" formControlName="email">
+        <p *ngIf="rfRegistrationsForm.controls.email.touched &&
+     rfRegistrationsForm.controls.email?.errors?.required"
+           class="text-danger">Không được để trống</p>
+        <p *ngIf="rfRegistrationsForm.controls.email.touched &&
+     rfRegistrationsForm.controls.email?.errors?.email"
+           class="text-danger">Email phăỉ đúng định dạng</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label for="password">Password</label>
+      </td>
+      <td>
+        <input type="text" id="password" name="password" class="form-control" formControlName="password">
+        <p *ngIf="rfRegistrationsForm.controls.password.touched &&
+     rfRegistrationsForm.controls.password?.errors?.required"
+           class="text-danger">Không được để trống</p>
+        <p *ngIf="rfRegistrationsForm.controls.password.touched &&
+     rfRegistrationsForm.controls.password.errors?.minlength"
+           class="text-danger">Mật khẩu phải đủ 6 kí tự</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label for="confirmPassword">Confirm Password</label>
+      </td>
+      <td>
+        <input type="text" id="confirmPassword" name="confirmPassword" class="form-control" formControlName="confirmPassword">
+        <p *ngIf="rfRegistrationsForm.controls.confirmPassword.touched &&
+     rfRegistrationsForm.controls.confirmPassword?.errors?.required"
+           class="text-danger">Không được để trống</p>
+        <p *ngIf="rfRegistrationsForm.controls.password.touched &&
+     rfRegistrationsForm.controls.password?.errors?.minlength"
+           class="text-danger">Mật khẩu phải đủ 6 kí tự</p>
+        <p *ngIf="rfRegistrationsForm.controls.confirmPassword.touched &&
+     rfRegistrationsForm.controls.confirmPassword.value!=rfRegistrationsForm.controls.password.value"
+           class="text-danger">Mật khẩu chưa giống nhau</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="country">Country</label>
+      </td>
+      <td>
+        <input type="text" id="country" name="country" class="form-control" formControlName="country">
+        <p *ngIf="rfRegistrationsForm.controls.country.touched &&
+     rfRegistrationsForm.controls.country?.errors?.required"
+           class="text-danger">Không được để trống</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label for="age">Age</label>
+      </td>
+      <td>
+        <input type="text" id="age" class="form-control" formControlName="age" >
+        <p *ngIf="rfRegistrationsForm.controls.age.touched &&
+     rfRegistrationsForm.controls.age?.errors?.required"
+           class="text-danger">Không được để trống</p>
+        <p *ngIf="rfRegistrationsForm.controls.age.touched &&
+     rfRegistrationsForm.controls.age?.errors?.invalidAge"
+           class="text-danger">Tuổi phải lớn hơn 18</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label>Giới tính: </label>
+      </td>
+      <td>
+        <input type="radio" name="gender" value="true" formControlName="gender">Nam
+        <input type="radio" name="gender" value="false" formControlName="gender">Nữ
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label for="phone">Phone</label>
+      </td>
+      <td>
+        <input type="text" id="phone" class="form-control" formControlName="phone">
+        <p *ngIf="rfRegistrationsForm.controls.phone.touched &&
+     rfRegistrationsForm.controls.phone?.errors?.required"
+           class="text-danger">Không được để trống</p>
+        <p *ngIf="rfRegistrationsForm.controls.phone.touched &&
+     rfRegistrationsForm.controls.phone?.errors?.pattern"
+           class="text-danger">Số điện thoại chưa đúng định dạng</p>
+      </td>
+    </tr>
+  </table>
+  <button class="btn btn-outline-info" type="submit" [disabled]="rfRegistrationsForm.invalid">Đăng kí</button>
+</form>
