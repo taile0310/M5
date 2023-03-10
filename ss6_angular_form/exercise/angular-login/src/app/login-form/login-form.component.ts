@@ -19,7 +19,7 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
-  add() {
+  login() {
     console.log(this.rfLoginForm.value);
   }
 }

@@ -36,7 +36,7 @@ export class RegistrationsFormComponent implements OnInit {
   }
 
 
-  add() {
+  register() {
     console.log(this.rfRegistrationsForm.value);
   }
 }
