@@ -1,63 +1,76 @@
-<h4 class="d-flex justify-content-center">Cập Nhập Khách Hàng</h4>\
+<h4 class="d-flex justify-content-center">Cập Nhập Khách Hàng</h4>
 <div class="d-flex justify-content-center">
-  <table >
-    <tr>
-      <td>Tên Khách Hàng:</td>
-      <td>
-        <input type="text" id="updateName"/>
-
-      </td>
-    </tr>
-    <tr>
-      <td>Ngày sinh:</td>
-      <td>
-        <input type="date" id="updateBirthOfDay"/>
-      </td>
-    </tr>
-    <tr>
-      <td>Giới tính:</td>
-      <td>
-        <input type="text">
-      </td>
-    </tr>
-    <tr>
-      <td>Thẻ căn cước:</td>
-      <td>
-        <input type="text" id="updateIdCard"/>
-
-      </td>
-    </tr>
-    <tr>
-      <td>Số điện thoại:</td>
-      <td>
-        <input type="text" id="updatePhoneNumber"/>
-
-      </td>
-    </tr>
-    <tr>
-      <td>Email:</td>
-      <td>
-        <input type="text" id="updateEmail"/>
-
-      </td>
-    </tr>
-    <tr>
-      <td>Địa chỉ:</td>
-      <td>
-        <input type="text" id="updateAddress"/>
-      </td>
-    </tr>
-    <tr>
-      <td>Loại khách hàng:</td>
-      <td>
-        <input type="text">
-      </td>
-    </tr>
-  </table>
-
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng
-  </button>
-  <button type="submit" class="btn btn-outline-info">Sửa thông tin khách hàng</button>
+  <form [formGroup]="rfUpdateCustomer" (ngSubmit)="updateCustomer()">
+    <table >
+      <tr>
+        <td>Tên Khách Hàng:</td>
+        <td>
+          <input formControlName="name"  class="form-control" type="text">
+          <p *ngIf="rfUpdateCustomer.controls.name.touched && rfUpdateCustomer.controls.name?.errors?.required" class="text-danger">
+            Tên không được để trống</p>
+          <p *ngIf="rfUpdateCustomer.controls.name.touched && rfUpdateCustomer.controls.name?.errors?.pattern" class="text-danger">
+            Tên chưa đúng định dạng</p>
+        </td>
+      </tr>
+      <tr>
+        <td>Ngày sinh:</td>
+        <td>
+          <input type="date" id="updateBirthOfDay"/>
+        </td>
+      </tr>
+      <tr>
+        <td>Giới tính:</td>
+        <td>
+          <input type="text">
+        </td>
+      </tr>
+      <tr>
+        <td>Thẻ căn cước:</td>
+        <td>
+          <input type="text" formControlName="idCard">
+          <p *ngIf="rfUpdateCustomer.controls.idCard.touched && rfUpdateCustomer.controls.idCard?.errors?.pattern"
+             class="text-danger">Thẻ căn cước chưa đúng định dạng</p>
+          <p *ngIf="rfUpdateCustomer.controls.idCard.touched && rfUpdateCustomer.controls.idCard?.errors?.required"
+             class="text-danger">Thẻ căn cước không được để trống</p>
+        </td>
+      </tr>
+      <tr>
+        <td>Số điện thoại:</td>
+        <td>
+          <input type="text" formControlName="phoneNumber">
+          <p *ngIf="rfUpdateCustomer.controls.phoneNumber.touched && rfUpdateCustomer.controls.phoneNumber?.errors?.pattern"
+             class="text-danger">Số diện thoại chưa đúng định dạng</p>
+          <p *ngIf="rfUpdateCustomer.controls.phoneNumber.touched && rfUpdateCustomer.controls.phoneNumber?.errors?.required"
+             class="text-danger">Số diện thoại không được để trống</p>
+        </td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td>
+          <input type="text" formControlName="email">
+          <p *ngIf="rfUpdateCustomer.controls.email.touched && rfUpdateCustomer.controls.email?.errors?.pattern"
+             class="text-danger">Email chưa đúng định dạng</p>
+          <p *ngIf="rfUpdateCustomer.controls.email.touched && rfUpdateCustomer.controls.email?.errors?.required"
+             class="text-danger">Email không được để trống</p>
+        </td>
+      </tr>
+      <tr>
+        <td>Địa chỉ:</td>
+        <td>
+          <input type="text" id="updateAddress"/>
+        </td>
+      </tr>
+      <tr>
+        <td>Loại khách hàng:</td>
+        <td>
+          <input type="text">
+        </td>
+      </tr>
+    </table>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng
+      </button>
+      <button type="submit" class="btn btn-outline-info" [disabled]="rfUpdateCustomer.invalid">Sửa thông tin khách hàng</button>
+    </div>
+  </form>
 </div>

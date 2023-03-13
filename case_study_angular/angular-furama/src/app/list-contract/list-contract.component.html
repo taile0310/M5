@@ -13,15 +13,15 @@
     <th>Sửa thông tin</th>
     <th>Xóa cơ sở</th>
   </tr>
-  <tr>
-    <td>1</td>
-    <td>01-02-2023</td>
-    <td>02-02-2023</td>
-    <td>500000</td>
-    <td>Linh</td>
-    <td>Tai</td>
-    <td>Villa</td>
-    <td>500000</td>
+  <tr *ngFor="let contract of contracts; index as i">
+    <td scope="row">{{i + 1}}</td>
+    <td>{{contract.startDay}}</td>
+    <td>{{contract.endDay}}</td>
+    <td>{{contract.deposit| currency:'VND'}}</td>
+    <td>{{contract.employee | titlecase}}</td>
+    <td>{{contract.customer | titlecase}}</td>
+    <td>{{contract.facility}}</td>
+    <td>{{contract.total| currency:'VND'}}</td>
     <td>
       <button
         type="button" class="btn btn-outline-success"

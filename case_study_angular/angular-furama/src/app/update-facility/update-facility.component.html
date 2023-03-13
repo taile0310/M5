@@ -6,32 +6,41 @@
 </div>
 <h4 class="d-flex justify-content-center">Cập nhập Cơ Sở</h4>
 <div class="d-flex justify-content-center">
+  <form [formGroup]="rfUpdateFacility" (ngSubmit)="updateFacility()"></form>
   <table>
     <tr>
       <td>Tên cơ sở</td>
       <td>
-        <input type="text"/>
+        <input type="text" formControlName="name">
+        <p *ngIf="rfUpdateFacility.controls.name.touched && rfUpdateFacility.controls.name?.errors?.required" class="text-danger">
+          Tên không được để trống</p>
+        <p *ngIf="rfUpdateFacility.controls.name.touched && rfUpdateFacility.controls.name?.errors?.pattern" class="text-danger">
+          Tên chưa đúng định dạng</p>
 
       </td>
     </tr>
     <tr>
       <td> Diện tích</td>
       <td>
-        <input type="number"/>
-
+        <input type="number" formControlName="area">
+        <p *ngIf="rfUpdateFacility.controls.area.touched && rfUpdateFacility.controls.area?.errors?.required" class="text-danger">
+          Diện tích không được để trống</p>
       </td>
     </tr>
     <tr>
       <td> Giá thuê</td>
       <td>
-        <input type="number"/>
-
+        <input type="number" formControlName="cost">
+        <p *ngIf="rfUpdateFacility.controls.cost.touched && rfUpdateFacility.controls.cost?.errors?.required" class="text-danger">
+          Gíá không được để trống</p>
       </td>
     </tr>
     <tr>
       <td>Số người tối đa</td>
       <td>
-        <input type="number">
+        <input type="number" formControlName="maxPeople">
+        <p *ngIf="rfUpdateFacility.controls.maxPeople.touched && rfUpdateFacility.controls.maxPeople?.errors?.required" class="text-danger">
+          Số người không được để trống</p>
 
       </td>
     </tr>
@@ -39,59 +48,78 @@
     <tr id="standardRoom">
       <td>Tiêu chuẩn phòng</td>
       <td>
-        <input type="text"/>
+        <input type="text" formControlName="standardRoom">
+        <p *ngIf="rfUpdateFacility.controls.standardRoom.touched && rfUpdateFacility.controls.standardRoom?.errors?.required" class="text-danger">
+          Tiêu chuẩn phòng không được để trống</p>
       </td>
     </tr>
 
     <tr id="description">
       <td>Mô tả</td>
       <td>
-        <input type="text"/>
+        <input type="text" formControlName="description">
+        <p *ngIf="rfUpdateFacility.controls.description.touched && rfUpdateFacility.controls.description?.errors?.required" class="text-danger">
+          Mô tả cơ sở không được để trống</p>
       </td>
     </tr>
 
     <tr id="poolArea">
       <td>Diện tích hồ bơi</td>
       <td>
-        <input type="text"/>
-
+        <input type="number" formControlName="poolArea">
+        <p *ngIf="rfUpdateFacility.controls.poolArea.touched && rfUpdateFacility.controls.poolArea?.errors?.required" class="text-danger">
+          Diện tích hồ bơi không được để trống</p>
+        <p *ngIf="rfUpdateFacility.controls.poolArea.touched && rfUpdateFacility.controls.poolArea?.errors?.invalidPoolAndFloor" class="text-danger">
+          Diện tích hồ bơi không được âm</p>
       </td>
     </tr>
 
     <tr id="numberOfFloors">
       <td>Số tầng</td>
       <td>
-        <input type="text"/>
+        <input type="number" formControlName="numberOfFloors">
+        <p *ngIf="rfUpdateFacility.controls.numberOfFloors.touched && rfUpdateFacility.controls.numberOfFloors?.errors?.required" class="text-danger">
+          Số tầng không được để trống</p>
+        <p *ngIf="rfUpdateFacility.controls.numberOfFloors.touched && rfUpdateFacility.controls.numberOfFloors?.errors?.invalidPoolAndFloor" class="text-danger">
+          Số tầng không được âm</p>
 
       </td>
     </tr>
     <tr id="facilityFree">
       <td>Dịch vụ miễn phí</td>
       <td>
-        <input type="text"/>
+        <input type="text" formControlName="facilityFree">
+        <p *ngIf="rfUpdateFacility.controls.facilityFree.touched && rfUpdateFacility.controls.facilityFree?.errors?.required" class="text-danger">
+          Dịch vụ miễn phí không được để trống</p>
       </td>
     </tr>
     <tr>
       <td>Kiểu thuê</td>
       <td>
-        <input type="text">
+        <input type="text" formControlName="rentType">
+        <p *ngIf="rfUpdateFacility.controls.rentType.touched && rfUpdateFacility.controls.rentType?.errors?.required" class="text-danger">
+          Kiểu thuê không được để trống</p>
       </td>
     </tr>
     <tr>
       <td>Loại cơ sở</td>
       <td>
-        <input type="text">
+        <input type="text" formControlName="facilityType">
+        <p *ngIf="rfUpdateFacility.controls.facilityType.touched && rfUpdateFacility.controls.facilityType?.errors?.required" class="text-danger">
+          Loại cơ sở không được để trống</p>
       </td>
     </tr>
     <tr>
       <td>Hình ảnh</td>
       <td>
-        <input type="text">
-      </td>
+        <input type="text" formControlName="img">
+        <p *ngIf="rfUpdateFacility.controls.img.touched && rfUpdateFacility.controls.img?.errors?.required" class="text-danger">
+          Hình ảnh không được để trống</p>      </td>
     </tr>
   </table>
+  <div class="modal-footer">
+    <button  type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+    <button type="submit" class="btn btn-outline-info" [disabled]="rfUpdateFacility.invalid">Cập nhật </button>
+  </div>
 </div>
-<div class="modal-footer">
-  <button  type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
-  <button type="submit" class="btn btn-outline-info">Cập nhật </button>
-</div>
+

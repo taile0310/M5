@@ -6,94 +6,118 @@
 </div>
 <h4 class="d-flex justify-content-center">Thêm Cơ Sở</h4>
 <div class="d-flex justify-content-center">
+  <form [formGroup]="rfFacility" (ngSubmit)="addFacility()">
+    <table>
+      <tr>
+        <td>Tên cơ sở</td>
+        <td>
+          <input type="text" formControlName="name">
+          <p *ngIf="rfFacility.controls.name.touched && rfFacility.controls.name?.errors?.required" class="text-danger">
+            Tên không được để trống</p>
+          <p *ngIf="rfFacility.controls.name.touched && rfFacility.controls.name?.errors?.pattern" class="text-danger">
+            Tên chưa đúng định dạng</p>
+        </td>
+      </tr>
+      <tr>
+        <td> Diện tích</td>
+        <td>
+          <input type="number" formControlName="area">
+          <p *ngIf="rfFacility.controls.area.touched && rfFacility.controls.area?.errors?.required" class="text-danger">
+            Diện tích không được để trống</p>
+        </td>
+      </tr>
+      <tr>
+        <td> Giá thuê</td>
+        <td>
+          <input type="number" formControlName="cost">
+          <p *ngIf="rfFacility.controls.cost.touched && rfFacility.controls.cost?.errors?.required" class="text-danger">
+            Gíá không được để trống</p>
+        </td>
+      </tr>
+      <tr>
+        <td>Số người tối đa</td>
+        <td>
+          <input type="number" formControlName="maxPeople">
+          <p *ngIf="rfFacility.controls.maxPeople.touched && rfFacility.controls.maxPeople?.errors?.required" class="text-danger">
+            Số người không được để trống</p>
+        </td>
+      </tr>
 
+      <tr>
+        <td>Tiêu chuẩn phòng</td>
+        <td>
+          <input type="text" formControlName="standardRoom">
+          <p *ngIf="rfFacility.controls.standardRoom.touched && rfFacility.controls.standardRoom?.errors?.required" class="text-danger">
+            Tiêu chuẩn phòng không được để trống</p>
+        </td>
+      </tr>
 
-  <table>
-    <tr>
-      <td>Tên cơ sở</td>
-      <td>
-        <input type="text"/>
+      <tr id="description">
+        <td>Mô tả</td>
+        <td>
+          <input type="text" formControlName="description">
+          <p *ngIf="rfFacility.controls.description.touched && rfFacility.controls.description?.errors?.required" class="text-danger">
+            Mô tả cơ sở không được để trống</p>
+        </td>
+      </tr>
 
-      </td>
-    </tr>
-    <tr>
-      <td> Diện tích</td>
-      <td>
-        <input type="number"/>
+      <tr id="poolArea">
+        <td>Diện tích hồ bơi</td>
+        <td>
+          <input type="number" formControlName="poolArea">
+          <p *ngIf="rfFacility.controls.poolArea.touched && rfFacility.controls.poolArea?.errors?.required" class="text-danger">
+            Diện tích hồ bơi không được để trống</p>
+          <p *ngIf="rfFacility.controls.poolArea.touched && rfFacility.controls.poolArea?.errors?.invalidPoolAndFloor" class="text-danger">
+            Diện tích hồ bơi không được âm</p>
+        </td>
+      </tr>
 
-      </td>
-    </tr>
-    <tr>
-      <td> Giá thuê</td>
-      <td>
-        <input type="number"/>
-
-      </td>
-    </tr>
-    <tr>
-      <td>Số người tối đa</td>
-      <td>
-        <input type="number">
-
-      </td>
-    </tr>
-
-    <tr id="standardRoom">
-      <td>Tiêu chuẩn phòng</td>
-      <td>
-        <input type="text"/>
-      </td>
-    </tr>
-
-    <tr id="description">
-      <td>Mô tả</td>
-      <td>
-        <input type="text"/>
-      </td>
-    </tr>
-
-    <tr id="poolArea">
-      <td>Diện tích hồ bơi</td>
-      <td>
-        <input type="text"/>
-
-      </td>
-    </tr>
-
-    <tr id="numberOfFloors">
-      <td>Số tầng</td>
-      <td>
-        <input type="text"/>
-
-      </td>
-    </tr>
-    <tr id="facilityFree">
-      <td>Dịch vụ miễn phí</td>
-      <td>
-        <input type="text"/>
-      </td>
-    </tr>
-    <tr>
-      <td>Kiểu thuê</td>
-      <td>
-        <input type="text">
-      </td>
-    </tr>
-    <tr>
-      <td>Loại cơ sở</td>
-      <td>
-        <input type="text">
-      </td>
-    </tr>
-    <tr>
-      <td>Hình ảnh</td>
-      <td>
-        <input type="text">
-      </td>
-    </tr>
-  </table>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
-  <button type="submit" class="btn btn-outline-info">Thêm cơ sở</button>
+      <tr id="numberOfFloors">
+        <td>Số tầng</td>
+        <td>
+          <input type="number" formControlName="numberOfFloors">
+          <p *ngIf="rfFacility.controls.numberOfFloors.touched && rfFacility.controls.numberOfFloors?.errors?.required" class="text-danger">
+            Số tầng không được để trống</p>
+          <p *ngIf="rfFacility.controls.numberOfFloors.touched && rfFacility.controls.numberOfFloors?.errors?.invalidPoolAndFloor" class="text-danger">
+            Số tầng không được âm</p>
+        </td>
+      </tr>
+      <tr id="facilityFree">
+        <td>Dịch vụ miễn phí</td>
+        <td>
+          <input type="text" formControlName="facilityFree">
+          <p *ngIf="rfFacility.controls.facilityFree.touched && rfFacility.controls.facilityFree?.errors?.required" class="text-danger">
+            Dịch vụ miễn phí không được để trống</p>
+        </td>
+      </tr>
+      <tr>
+        <td>Kiểu thuê</td>
+        <td>
+          <input type="text" formControlName="rentType">
+          <p *ngIf="rfFacility.controls.rentType.touched && rfFacility.controls.rentType?.errors?.required" class="text-danger">
+            Kiểu thuê không được để trống</p>
+        </td>
+      </tr>
+      <tr>
+        <td>Loại cơ sở</td>
+        <td>
+          <input type="text" formControlName="facilityType">
+          <p *ngIf="rfFacility.controls.facilityType.touched && rfFacility.controls.facilityType?.errors?.required" class="text-danger">
+            Loại cơ sở không được để trống</p>
+        </td>
+      </tr>
+      <tr>
+        <td>Hình ảnh</td>
+        <td>
+          <input type="text" formControlName="img">
+          <p *ngIf="rfFacility.controls.img.touched && rfFacility.controls.img?.errors?.required" class="text-danger">
+            Hình ảnh không được để trống</p>
+        </td>
+      </tr>
+    </table>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+      <button type="submit" class="btn btn-outline-info" [disabled]="rfFacility.invalid">Thêm cơ sở</button>
+    </div>
+  </form>
 </div>

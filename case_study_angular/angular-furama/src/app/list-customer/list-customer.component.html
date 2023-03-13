@@ -13,16 +13,19 @@
     <th>Sửa thông tin</th>
     <th>Xóa khách hàng</th>
   </tr>
-  <tr>
-    <td>1</td>
-    <td>Nguyen Van A</td>
-    <td>03-10-2000</td>
-    <td>Nam</td>
-    <td>123123123</td>
-    <td>0935319915</td>
-    <td>tai@gmail.com</td>
-    <td>da nang</td>
-    <td>Diamond</td>
+  <tr *ngFor="let customer of customers, index as i ">
+    <td scope="row">{{i + 1}}</td>
+    <td>{{customer.name}}</td>
+    <td>{{customer.birthOfDay | date : 'dd-MM-yyyy'}}</td>
+    <td>
+     <ng-container *ngIf="customer.gender == true"> Nam </ng-container>
+      <ng-container *ngIf="customer.gender == false"> Nữ </ng-container>
+    </td>
+    <td>{{customer.idCard}}</td>
+    <td>{{customer.phoneNumber}}</td>
+    <td>{{customer.email}}</td>
+    <td>{{customer.address}}</td>
+    <td>{{customer.customerType}}</td>
     <td>
       <button type="button" class="btn btn-outline-secondary"
               data-bs-toggle="modal"

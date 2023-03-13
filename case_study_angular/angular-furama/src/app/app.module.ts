@@ -13,6 +13,7 @@ import { AddNewCustomerComponent } from './add-new-customer/add-new-customer.com
 import { UpdateCustomerComponent } from './update-customer/update-customer.component';
 import { ListContractComponent } from './list-contract/list-contract.component';
 import { AddNewContractComponent } from './add-new-contract/add-new-contract.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import { AddNewContractComponent } from './add-new-contract/add-new-contract.com
     AddNewContractComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
