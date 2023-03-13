@@ -1,0 +1,20 @@
+<h1 class="d-flex justify-content-center">Danh sách sản phẩm</h1>
+<button class="btn btn-outline-info" type="button" routerLink="/product/create">Tạo mới sản phẩm</button>
+<table class="table table-bordered">
+  <tr>
+    <td>STT</td>
+    <td>Tên</td>
+    <td>Giá</td>
+    <td>Mô tả</td>
+    <th>Sửa</th>
+    <th>Xóa</th>
+  </tr>
+  <tr *ngFor="let product of products; index as i">
+    <td>{{i + 1}}</td>
+    <td>{{product.name}}</td>
+    <td>{{product.price}}</td>
+    <td>{{product.description}}</td>
+    <td> <a routerLink="/product/edit/{{product.id}}" class="btn btn-outline-info">Sửa</a></td>
+    <td> <a routerLink="/product/delete/{{product.id}}" class="btn btn-outline-danger">Xóa</a></td>
+  </tr>
+</table>

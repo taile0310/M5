@@ -1,0 +1,15 @@
+<h3 class="d-flex jus">Từ điển</h3>
+<table class="table table-bordered">
+  <tr>
+    <th>STT</th>
+    <th>Tiếng anh</th>
+    <th>Tiếng việt</th>
+  </tr>
+  <tr *ngFor="let dictionary of dictionarys, index as i">
+    <td>{{i + 1}}</td>
+    <td>{{dictionary.english}}</td>
+    <td>
+      <button type="button" routerLink="/dictionary-detail/{{dictionary.english}}">Mean</button>
+    </td>
+  </tr>
+</table>

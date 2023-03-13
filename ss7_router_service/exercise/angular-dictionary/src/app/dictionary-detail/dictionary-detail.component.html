@@ -1,0 +1,7 @@
+<h3>Từ điển</h3>
+<div class="cart text-left" *ngIf="dictionarys">
+  <div class="card-body">
+    <p>'{{dictionarys.english}}' có nghĩa là: {{dictionarys.vietnamese}}</p>
+  </div>
+  <button type="button" routerLink="/dictionary">Quay lại</button>
+</div>
